@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,16 +5,14 @@ using UnityEngine.UI;
 public class RadialLayoutGroup : LayoutGroup
 {
 	[SerializeField] 
-	private float radius = 100f;
+	public float radius = 100f;
 	[SerializeField] 
-	private float startAngle = 0f;
-
+	public float startAngle = 0f;
 	[SerializeField]
-	private bool fillCircle = true;
+	public bool fullCircle = true;
 	[SerializeField] 
-	private float space = 30f;
-
-
+	public float angleSpace = 30f;
+	
 	public override void CalculateLayoutInputHorizontal()
 	{
 		base.CalculateLayoutInputHorizontal();
@@ -46,8 +43,8 @@ public class RadialLayoutGroup : LayoutGroup
 			return;
 
 		float angleStep;
-		if (fillCircle) angleStep = 360f / activeChildCount;
-		else angleStep = space;
+		if (fullCircle) angleStep = 360f / activeChildCount;
+		else angleStep = angleSpace;
 
 		float currentAngle = startAngle;
 
