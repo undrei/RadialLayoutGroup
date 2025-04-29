@@ -59,9 +59,6 @@ public class RadialMenu : MonoBehaviour
 			menuElements[currentIndex].onClick?.Invoke();
 			UpdatePointerToIndex(outerPointer, currentIndex);
 		}
-
-		
-		//UpdatePointerToIndex(pointer, index);
 	}
 	
 	private void AnimatePointer()
