@@ -10,6 +10,8 @@ public class RadialLayoutGroup : LayoutGroup
 	public float startAngle = 0f;
 	[SerializeField]
 	public bool fullCircle = true;
+	[SerializeField]
+	public bool clockwise = true; 
 	[SerializeField] 
 	public float angleSpace = 30f;
 	
@@ -43,9 +45,12 @@ public class RadialLayoutGroup : LayoutGroup
 			return;
 
 		float angleStep;
-		if (fullCircle) angleStep = 360f / activeChildCount;
-		else angleStep = angleSpace;
-
+		if (fullCircle)
+			angleStep = 360f / activeChildCount;
+		else
+			angleStep = angleSpace;
+		
+		int direction = clockwise ? 1 : -1;
 		float currentAngle = startAngle;
 
 		Vector2 center = GetAlignmentOffset();
@@ -56,12 +61,15 @@ public class RadialLayoutGroup : LayoutGroup
 			if (!child.gameObject.activeSelf) 
 				continue;
 
-			Vector2 pos = new Vector2(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad)) * radius;
+			Vector2 pos = new Vector2(
+				Mathf.Cos(currentAngle * Mathf.Deg2Rad),
+				Mathf.Sin(currentAngle * Mathf.Deg2Rad)
+			) * radius;
 
 			SetChildAlongAxis(child, 0, center.x + pos.x - (child.rect.width * 0.5f));
 			SetChildAlongAxis(child, 1, center.y + pos.y - (child.rect.height * 0.5f));
 
-			currentAngle += angleStep;
+			currentAngle += direction * angleStep;
 		}
 	}
 
@@ -73,13 +81,13 @@ public class RadialLayoutGroup : LayoutGroup
 		switch (childAlignment)
 		{
 			case TextAnchor.UpperLeft:
-				pivot = new Vector2(0, 1);
+				pivot = new Vector2(0, 0);
 				break;
 			case TextAnchor.UpperCenter:
-				pivot = new Vector2(0.5f, 1);
+				pivot = new Vector2(0.5f, 0);
 				break;
 			case TextAnchor.UpperRight:
-				pivot = new Vector2(1, 1);
+				pivot = new Vector2(1, 0);
 				break;
 			case TextAnchor.MiddleLeft:
 				pivot = new Vector2(0, 0.5f);
@@ -91,13 +99,13 @@ public class RadialLayoutGroup : LayoutGroup
 				pivot = new Vector2(1, 0.5f);
 				break;
 			case TextAnchor.LowerLeft:
-				pivot = new Vector2(0, 0);
+				pivot = new Vector2(0, 1);
 				break;
 			case TextAnchor.LowerCenter:
-				pivot = new Vector2(0.5f, 0);
+				pivot = new Vector2(0.5f, 1);
 				break;
 			case TextAnchor.LowerRight:
-				pivot = new Vector2(1, 0);
+				pivot = new Vector2(1, 1);
 				break;
 		}
 		

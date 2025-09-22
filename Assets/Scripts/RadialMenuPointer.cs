@@ -15,7 +15,6 @@ public class RadialMenuPointer : MaskableGraphic
 	[SerializeField] 
 	public float targetAngle = 0f;
 	
-
 	protected override void OnPopulateMesh(VertexHelper vh)
 	{
 		vh.Clear();
